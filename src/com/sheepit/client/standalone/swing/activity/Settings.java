@@ -11,6 +11,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.net.MalformedURLException;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,12 +23,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JSlider;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
+
 import com.sheepit.client.Configuration;
 import com.sheepit.client.Configuration.ComputeType;
 import com.sheepit.client.SettingsLoader;
@@ -297,6 +303,7 @@ public class Settings implements Activity {
 		parent.addPadding(columns - 1, 0, 1, currentRow + 1);
 		
 		
+		
 		if (haveAutoStarted == false && config.getAutoSignIn() && checkDisplaySaveButton()) {
 			// auto start
 			haveAutoStarted = true;
@@ -363,12 +370,63 @@ public class Settings implements Activity {
 		}
 	}
 	
-class ShoutdownSettingsActions implements ActionListener {
+	
+	
+	
+	class startShoutDownTimerAction implements ActionListener {
+		
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+}	
+	
+	class ShoutdownSettingsActions implements ActionListener {
+		private JSpinner timeSpinner ;
+			private void test(java.awt.event.ActionEvent evt)
+			{
+				Date time = (Date)timeSpinner.getValue();
+				System.out.println(time);
+			}
+
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			long time_now = System.currentTimeMillis();
-			newframe.pack()
+			JFrame Shoutdown_frame = new JFrame("Shoutdown Settings");
+			
+			Shoutdown_frame.pack();
+			Shoutdown_frame.setSize(300,300);
+			Shoutdown_frame.setLocationByPlatform(true);
+			Shoutdown_frame.setVisible(true);
+			Shoutdown_frame.requestFocus();
+			
+			
+			
+			
+			
+			
+			timeSpinner = new JSpinner( new SpinnerDateModel() );
+			JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm:ss");
+			timeSpinner.setEditor(timeEditor);
+			timeSpinner.setValue(new Date()); // will only show the current time
+			
+			timeSpinner.setPreferredSize(new Dimension(100, 50));
+			//timeSpinner.setBounds(50,100,100,20);
+			Shoutdown_frame.add(timeSpinner);
+			
+JButton startShoutDownTimer = new JButton("shoutdown timer start");
+			
+			startShoutDownTimer.addActionListener(new java.awt.event.ActionListener() {
+			    public void actionPerformed(java.awt.event.ActionEvent evt) {
+			           test(evt);
+			    }});
+			startShoutDownTimer.setLayout(null);
+			startShoutDownTimer.setBounds(50,50,200,50);
+			Shoutdown_frame.add(startShoutDownTimer);
+			
+		
 		}
 }	
 	class SaveAction implements ActionListener {
