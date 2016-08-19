@@ -54,6 +54,7 @@ public class Settings implements Activity {
 	private JCheckBox saveFile;
 	private JCheckBox autoSignIn;
 	JButton saveButton;
+	JButton setAutoShoutdown;
 	
 	private boolean haveAutoStarted;
 	
@@ -78,7 +79,7 @@ public class Settings implements Activity {
 		parent.addPadding(1, ++currentRow, columns - 2, 1);
 		++currentRow;
 		
-		ImageIcon image = new ImageIcon(getClass().getResource("/title.png"));
+		ImageIcon image = new ImageIcon(System.getProperty("user.dir")+"resources/title.png");
 		JLabel labelImage = new JLabel(image);
 		constraints.fill = GridBagConstraints.BOTH;
 		constraints.weightx = 1.0;
@@ -281,6 +282,20 @@ public class Settings implements Activity {
 		parent.addPadding(0, 0, 1, currentRow + 1);
 		parent.addPadding(columns - 1, 0, 1, currentRow + 1);
 		
+		// same here with the settings button / panel for autoshoudown
+		
+		setAutoShoutdown = new JButton("Shutdown Sesttings");
+		checkDisplaySaveButton();
+		setAutoShoutdown.addActionListener(new ShoutdownSettingsActions());
+		constraints.gridwidth = columns - 2;
+		constraints.gridx = 1;
+		constraints.gridy = currentRow;
+		parent.getContentPane().add(setAutoShoutdown, constraints);
+		
+		parent.addPadding(1, ++currentRow, columns - 2, 1);
+		parent.addPadding(0, 0, 1, currentRow + 1);
+		parent.addPadding(columns - 1, 0, 1, currentRow + 1);
+		
 		
 		if (haveAutoStarted == false && config.getAutoSignIn() && checkDisplaySaveButton()) {
 			// auto start
@@ -348,6 +363,14 @@ public class Settings implements Activity {
 		}
 	}
 	
+class ShoutdownSettingsActions implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			long time_now = System.currentTimeMillis();
+			newframe.pack()
+		}
+}	
 	class SaveAction implements ActionListener {
 		
 		@Override
